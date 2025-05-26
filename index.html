@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADAMA DEVELOPMENT PLC - Nazmed Medical Textiles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .header h1 {
+            font-size: 20px;
+            margin: 8px 0;
+        }
+        .header p {
+            font-size: 12px;
+            margin: 4px 0;
+        }
+        .section {
+            margin-bottom: 15px;
+        }
+        .section h2 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .form-group label {
+            width: 30%;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 65%;
+            padding: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 8px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: left;
+            font-size: 12px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        td input {
+            width: 100%;
+            border: none;
+            padding: 4px;
+            box-sizing: border-box;
+        }
+        td input:focus {
+            outline: none;
+            background-color: #f0f8ff;
+        }
+        .table-buttons {
+            text-align: right;
+            margin-bottom: 15px;
+        }
+        .table-buttons button {
+            padding: 4px 8px;
+            margin-left: 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .conclusion-remark {
+            margin-bottom: 15px;
+        }
+        .conclusion-remark label {
+            font-weight: bold;
+        }
+        .conclusion-remark textarea {
+            width: 100%;
+            height: 80px;
+            padding: 4px;
+            font-size: 12px;
+        }
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .signature-group {
+            flex: 1;
+            min-width: 180px;
+            margin-right: 15px;
+            margin-bottom: 15px;
+        }
+        .signature-group:last-child {
+            margin-right: 0;
+        }
+        .signature-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 4px;
+            font-size: 12px;
+        }
+        .signature-group input[type="text"],
+        .signature-group input[type="date"] {
+            width: 100%;
+            padding: 4px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+        .signature-group canvas {
+            border: 1px solid #000;
+            width: 100%;
+            height: 60px;
+            background-color: #f9f9f9;
+            margin-bottom: 8px;
+        }
+        .signature-group button {
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .buttons button {
+            padding: 8px 16px;
+            margin: 0 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        /* Print styles for PDF export */
+        @media print {
+            .buttons, .table-buttons {
+                display: none; /* Hides buttons in PDF */
+            }
+            .signature-group button {
+                display: none; /* Hides clear buttons in PDF */
+            }
+            .header p:last-child::after {
+                content: "Page: 1 of 1"; /* Page numbering for single page */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ADAMA DEVELOPMENT PLC - Nazmed Medical Textiles</h1>
+            <h2>GAUZE BANDAGE LAB TEST RESULTS REPORT FORM</h2>
+            <p>Document No: ADPLC-OF-166 | Revision No: 00</p>
+        </div>
+
+        <div class="section">
+            <h2>Test Report</h2>
+            <div class="form-group">
+                <label>Sample Name:</label>
+                <input type="text">
+            </div>
+            <div class="form-group">
+                <label>Batch Number:</label>
+                <input type="text">
+            </div>
+            <div class="form-group">
+                <label>Batch Size:</label>
+                <input type="text">
+            </div>
+            <div class="form-group">
+                <label>Shift:</label>
+                <input type="text">
+            </div>
+            <div class="form-group">
+                <label>Test Method:</label>
+                <input type="text">
+            </div>
+            <div class="form-group">
+                <label>Testing Date:</label>
+                <input type="date">
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Test Results</h2>
+            <table id="test-results-table">
+                <tr>
+                    <th>Item</th>
+                    <th>Unit</th>
+                    <th>Standard</th>
+                    <th>Results</th>
+                    <th>Conclusion</th>
+                </tr>
+                <tr>
+                    <td>Width</td>
+                    <td>Cm</td>
+                    <td>90±2</td>
+                    <td><input type="text" name="result-width"></td>
+                    <td><input type="text" name="conclusion-width"></td>
+                </tr>
+                <tr>
+                    <td>Fiber Identification</td>
+                    <td>%</td>
+                    <td>100% cotton</td>
+                    <td><input type="text" name="result-fiber"></td>
+                    <td><input type="text" name="conclusion-fiber"></td>
+                </tr>
+                <tr>
+                    <td>Fluorescence</td>
+                    <td></td>
+                    <td>With the exception of that shown by a few isolated fibers no intense blue fluorescence shall be displayed</td>
+                    <td><input type="text" name="result-fluorescence"></td>
+                    <td><input type="text" name="conclusion-fluorescence"></td>
+                </tr>
+                <tr>
+                    <td>Mass per square meter</td>
+                    <td>g/m²</td>
+                    <td>≥13</td>
+                    <td><input type="text" name="result-mass"></td>
+                    <td><input type="text" name="conclusion-mass"></td>
+                </tr>
+                <tr>
+                    <td>Thread Count</td>
+                    <td>Threads/cm²</td>
+                    <td>≥12</td>
+                    <td><input type="text" name="result-thread"></td>
+                    <td><input type="text" name="conclusion-thread"></td>
+                </tr>
+                <tr>
+                    <td>Absorbency</td>
+                    <td>Second</td>
+                    <td>≤10</td>
+                    <td><input type="text" name="result-absorbency"></td>
+                    <td><input type="text" name="conclusion-absorbency"></td>
+                </tr>
+                <tr>
+                    <td>Whiteness</td>
+                    <td>°A</td>
+                    <td>≥72</td>
+                    <td><input type="text" name="result-whiteness"></td>
+                    <td><input type="text" name="conclusion-whiteness"></td>
+                </tr>
+                <tr>
+                    <td>Water-soluble substances</td>
+                    <td>%</td>
+                    <td>≤0.50</td>
+                    <td><input type="text" name="result-water-soluble"></td>
+                    <td><input type="text" name="conclusion-water-soluble"></td>
+                </tr>
+                <tr>
+                    <td>Sulphated Ash</td>
+                    <td>%</td>
+                    <td>≤0.75</td>
+                    <td><input type="text" name="result-ash"></td>
+                    <td><input type="text" name="conclusion-ash"></td>
+                </tr>
+                <tr>
+                    <td>Loss on drying</td>
+                    <td>%</td>
+                    <td>≤8</td>
+                    <td><input type="text" name="result-drying"></td>
+                    <td><input type="text" name="conclusion-drying"></td>
+                </tr>
+                <tr>
+                    <td>Starch and Dextrin</td>
+                    <td></td>
+                    <td>No red, violet, or blue color develops</td>
+                    <td><input type="text" name="result-starch"></td>
+                    <td><input type="text" name="conclusion-starch"></td>
+                </tr>
+                <tr>
+                    <td>Extractable coloring matter</td>
+                    <td></td>
+                    <td>Liquid obtained shall not be more than blue colored solution</td>
+                    <td><input type="text" name="result-coloring"></td>
+                    <td><input type="text" name="conclusion-coloring"></td>
+                </tr>
+                <tr>
+                    <td>Acidity and alkalinity</td>
+                    <td></td>
+                    <td>No pink color develops in either portion after addition of phenolphthalein and Methyl orange solution</td>
+                    <td><input type="text" name="result-acidity"></td>
+                    <td><input type="text" name="conclusion-acidity"></td>
+                </tr>
+            </table>
+            <div class="table-buttons">
+                <button onclick="saveTableData()">Save</button>
+                <button onclick="clearTableData()">Clear</button>
+            </div>
+        </div>
+
+        <div class="section conclusion-remark">
+            <label>Conclusion Remark:</label>
+            <textarea></textarea>
+        </div>
+
+        <div class="signature-section">
+            <div class="signature-group">
+                <label>Prepared by:</label>
+                <input type="text">
+                <label>Signature:</label>
+                <canvas id="signature-prepared" width="180" height="60"></canvas>
+                <button onclick="clearCanvas('signature-prepared')">Clear</button>
+                <label>Date:</label>
+                <input type="date">
+            </div>
+            <div class="signature-group">
+                <label>Checked by:</label>
+                <input type="text">
+                <label>Signature:</label>
+                <canvas id="signature-checked" width="180" height="60"></canvas>
+                <button onclick="clearCanvas('signature-checked')">Clear</button>
+                <label>Date:</label>
+                <input type="date">
+            </div>
+            <div class="signature-group">
+                <label>Approved by:</label>
+                <input type="text">
+                <label>Signature:</label>
+                <canvas id="signature-approved" width="180" height="60"></canvas>
+                <button onclick="clearCanvas('signature-approved')">Clear</button>
+                <label>Date:</label>
+                <input type="date">
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button>Submit Report</button>
+            <button onclick="window.print()">Export to PDF</button>
+        </div>
+    </div>
+
+    <script>
+        // Auto-populate Results and Conclusion columns
+        function populateTestResults() {
+            const testData = [
+                { result: "90.5", standard: "90±2", conclusion: "Pass" }, // Width
+                { result: "100% cotton", standard: "100% cotton", conclusion: "Pass" }, // Fiber Identification
+                { result: "No intense blue fluorescence", standard: "With the exception of that shown by a few isolated fibers no intense blue fluorescence shall be displayed", conclusion: "Pass" }, // Fluorescence
+                { result: "14.2", standard: "≥13", conclusion: "Pass" }, // Mass per square meter
+                { result: "13", standard: "≥12", conclusion: "Pass" }, // Thread Count
+                { result: "8", standard: "≤10", conclusion: "Pass" }, // Absorbency
+                { result: "75", standard: "≥72", conclusion: "Pass" }, // Whiteness
+                { result: "0.45", standard: "≤0.50", conclusion: "Pass" }, // Water-soluble substances
+                { result: "0.70", standard: "≤0.75", conclusion: "Pass" }, // Sulphated Ash
+                { result: "7", standard: "≤8", conclusion: "Pass" }, // Loss on drying
+                { result: "No color change", standard: "No red, violet, or blue color develops", conclusion: "Pass" }, // Starch and Dextrin
+                { result: "Light blue", standard: "Liquid obtained shall not be more than blue colored solution", conclusion: "Pass" }, // Extractable coloring matter
+                { result: "No pink color", standard: "No pink color develops in either portion after addition of phenolphthalein and Methyl orange solution", conclusion: "Pass" } // Acidity and alkalinity
+            ];
+
+            const savedData = JSON.parse(localStorage.getItem('testResultsData')) || {};
+            const table = document.getElementById('test-results-table');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                const inputs = rows[i].getElementsByTagName('input');
+                const resultName = inputs[0].name;
+                const conclusionName = inputs[1].name;
+                // Load saved data if available, otherwise use default test data
+                inputs[0].value = savedData[resultName] || testData[i-1].result; // Results column
+                inputs[1].value = savedData[conclusionName] || testData[i-1].conclusion; // Conclusion column
+            }
+        }
+
+        // Save table data to localStorage
+        function saveTableData() {
+            const table = document.getElementById('test-results-table');
+            const rows = table.getElementsByTagName('tr');
+            const data = {};
+
+            for (let i = 1; i < rows.length; i++) {
+                const inputs = rows[i].getElementsByTagName('input');
+                data[inputs[0].name] = inputs[0].value; // Results
+                data[inputs[1].name] = inputs[1].value; // Conclusion
+            }
+
+            localStorage.setItem('testResultsData', JSON.stringify(data));
+            alert('Test results saved successfully!');
+        }
+
+        // Clear table data
+        function clearTableData() {
+            const table = document.getElementById('test-results-table');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                const inputs = rows[i].getElementsByTagName('input');
+                inputs[0].value = ''; // Clear Results
+                inputs[1].value = ''; // Clear Conclusion
+            }
+            localStorage.removeItem('testResultsData');
+            alert('Test results cleared!');
+        }
+
+        // Signature canvas drawing functionality
+        function setupCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            let drawing = false;
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            // Touch support for mobile devices
+            canvas.addEventListener('touchstart', handleTouchStart);
+            canvas.addEventListener('touchmove', handleTouchMove);
+            canvas.addEventListener('touchend', stopDrawing);
+
+            function startDrawing(e) {
+                drawing = true;
+                draw(e);
+            }
+
+            function stopDrawing() {
+                drawing = false;
+                ctx.beginPath();
+            }
+
+            function draw(e) {
+                if (!drawing) return;
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#000';
+
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+            }
+
+            function handleTouchStart(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent('mousedown', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(mouseEvent);
+            }
+
+            function handleTouchMove(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent('mousemove', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(mouseEvent);
+            }
+        }
+
+        function clearCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Initialize canvases and populate test results
+        setupCanvas('signature-prepared');
+        setupCanvas('signature-checked');
+        setupCanvas('signature-approved');
+        window.onload = populateTestResults;
+    </script>
+</body>
+</html>
